@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Inventory System</title>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='css/style.css') }}"
+		/>
+	</head>
+	<body>
+		<div class="container mt-4">
+			{% with messages = get_flashed_messages() %} {% if messages %} {% for
+			message in messages %}
+			<div class="alert alert-warning">{{ message }}</div>
+			{% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+		</div>
+	</body>
+</html>

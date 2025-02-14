@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Your Inventory</h2>
+<a href="{{ url_for('routes.add_item') }}" class="btn btn-primary"
+	>Add New Item</a
+>
+<!-- Changed here -->
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Quantity</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for item in items %}
+		<tr>
+			<td>{{ item.name }}</td>
+			<td>{{ item.description }}</td>
+			<td>{{ item.quantity }}</td>
+			<td>
+				<a
+					href="{{ url_for('routes.edit_item', id=item.id) }}"
+					class="btn btn-warning"
+					>Edit</a
+				>
+				<!-- Changed here -->
+				<a
+					href="{{ url_for('routes.delete_item', id=item.id) }}"
+					class="btn btn-danger"
+					>Delete</a
+				>
+				<!-- Changed here -->
+			</td>
+		</tr>
+		{% endfor %}
+		<div class="mb-3">
+			<form action="{{ url_for('routes.search') }}" method="GET">
+				<div class="input-group">
+					<input
+						type="text"
+						name="q"
+						class="form-control"
+						placeholder="Search items..."
+					/>
+					<button type="submit" class="btn btn-primary">Search</button>
+				</div>
+			</form>
+		</div>
+
+		<!-- Add pagination controls -->
+		<nav aria-label="Page navigation">
+			<ul class="pagination">
+				{% if items.has_prev %}
+				<li class="page-item">
+					<a class="page-link" href="?page={{ items.prev_num }}">Previous</a>
+				</li>
+				{% endif %}
+
+				<li class="page-item disabled">
+					<span class="page-link">Page {{ items.page }}</span>
+				</li>
+
+				{% if items.has_next %}
+				<li class="page-item">
+					<a class="page-link" href="?page={{ items.next_num }}">Next</a>
+				</li>
+				{% endif %}
+			</ul>
+		</nav>
+	</tbody>
+</table>
+{% endblock %}
